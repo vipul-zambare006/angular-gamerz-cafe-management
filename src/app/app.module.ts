@@ -11,11 +11,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DemoMaterialModule } from './material-module';
+import { InMemoryWebApiModule } from "angular-in-memory-web-api";
+import { DataService } from './services/data.service';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserRegistrationFormComponent
+    UserRegistrationFormComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -26,8 +30,9 @@ import { DemoMaterialModule } from './material-module';
     DemoMaterialModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    InMemoryWebApiModule.forRoot(DataService)
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent],
   exports: [MatFormField, MatSelect, MatOption]
 })
