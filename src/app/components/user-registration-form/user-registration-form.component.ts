@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-user-registration-form',
@@ -10,7 +11,7 @@ export class UserRegistrationFormComponent implements OnInit {
 
   userEntryForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, public firebaseService: FirebaseService) {
     this.userEntryForm = this.formBuilder.group({
       name: '',
       phone: '',
@@ -24,7 +25,7 @@ export class UserRegistrationFormComponent implements OnInit {
   }
 
   doUserEntry() {
-    console.log(this.userEntryForm.value)
+    this.firebaseService.createUser(this.userEntryForm.value);
   }
 
 }

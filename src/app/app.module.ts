@@ -12,6 +12,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DemoMaterialModule } from './material-module';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
+import { FirebaseService } from './services/firebase.service';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,8 +32,10 @@ import { DemoMaterialModule } from './material-module';
     DemoMaterialModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
-  providers: [],
+  providers: [FirebaseService],
   bootstrap: [AppComponent],
   exports: [MatFormField, MatSelect, MatOption]
 })
