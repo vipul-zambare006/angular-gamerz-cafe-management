@@ -1,5 +1,7 @@
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserEntry } from '../interfaces/userEntry';
 
 @Injectable({
     providedIn: 'root'
@@ -21,8 +23,9 @@ export class FirebaseService {
         return this.db.collection('UserEntry').doc(userKey).delete();
     }
 
-    getUserEntry() {
-        return this.db.collection('UserEntry').snapshotChanges();
+    getAllUserEntry() {
+        // return this.db.collection('UserEntry').valueChanges(); //this will return me just data 
+        return this.db.collection('UserEntry').snapshotChanges()
     }
 
     // searchUserEntry(searchValue) {
@@ -38,12 +41,7 @@ export class FirebaseService {
 
     createUser(value) {
         debugger;
-        return this.db.collection('Cybercafe.UserEntry').add({
-            // name: value.name,
-            // nameToSearch: value.name.toLowerCase(),
-            // surname: value.surname,
-            // age: parseInt(value.age),
-            // avatar: avatar
+        return this.db.collection('UserEntry').add({
             branchId: 1,
             name: value.name,
             phone: value.phone,

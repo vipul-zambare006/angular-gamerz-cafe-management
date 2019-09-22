@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DemoMaterialModule } from './material-module';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { DataService } from './services/data.service';
+import { AppService } from './app.service';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -21,7 +24,8 @@ import { FirebaseService } from './services/firebase.service';
 @NgModule({
   declarations: [
     AppComponent,
-    UserRegistrationFormComponent
+    UserRegistrationFormComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -33,11 +37,12 @@ import { FirebaseService } from './services/firebase.service';
     MatNativeDateModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    // InMemoryWebApiModule.forRoot(DataService)
   ],
-  providers: [FirebaseService],
+  providers: [AppService, FirebaseService],
   bootstrap: [AppComponent],
   exports: [MatFormField, MatSelect, MatOption]
 })
 export class AppModule { }
-platformBrowserDynamic().bootstrapModule(AppModule);
+// platformBrowserDynamic().bootstrapModule(AppModule);
