@@ -1,46 +1,3 @@
-<div class="row">
-  <div class="col-md-6 offset-md-2">
-    <div class="example-container pt-4">
-
-      <div class="pb-2">
-        <h5>User Entry Form:</h5>
-      </div>
-
-      <form [formGroup]="userEntryForm" (ngSubmit)="doUserEntry()">
-        <mat-form-field>
-          <mat-select placeholder="Select Branch">
-            <mat-option value="Dombivli">Dombivli</mat-option>
-            <mat-option value="Thane">Thane</mat-option>
-            <mat-option value="Andheri">Andheri</mat-option>
-            <mat-option value="Navi Mumbai">Navi Mumbai</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput placeholder="Name" formControlName="name">
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput placeholder="Phone number" formControlName="phone">
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput placeholder="Email" formControlName="email">
-        </mat-form-field>
-
-
-        <mat-form-field>
-          <input matInput placeholder="Start Time" formControlName="startTime">
-        </mat-form-field>
-
-        <div class="pt-2">
-          <button mat-raised-button color="primary" type="submit">Submit</button>
-          <button mat-button>Clear</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 
 <div class="row">
   <div class="col-md-12 p-4">
@@ -81,7 +38,7 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef> Delete </th>
         <td mat-cell *matCellDef="let element" (click)="deleteUserEntry(element)">
-          <button mat-raised-button color="primary">Delete</button>
+          <button mat-raised-button color="warn">Delete</button>
         </td>
       </ng-container>
 

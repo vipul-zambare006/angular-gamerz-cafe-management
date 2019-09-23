@@ -19,13 +19,15 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { FirebaseService } from './services/firebase.service';
-
+import { UserRegistrationFormDialogComponent } from './components/user-registration-form-dialog/user-registration-form-dialog.component';
+import { CurrentUserEntryTableComponent } from './components/current-user-entry-table/current-user-entry-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserRegistrationFormComponent,
-
+    UserRegistrationFormDialogComponent,
+    CurrentUserEntryTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { FirebaseService } from './services/firebase.service';
   ],
   providers: [AppService, FirebaseService],
   bootstrap: [AppComponent],
-  exports: [MatFormField, MatSelect, MatOption]
+  exports: [MatFormField, MatSelect, MatOption],
+  entryComponents:[UserRegistrationFormDialogComponent]
 })
 export class AppModule { }
 // platformBrowserDynamic().bootstrapModule(AppModule);

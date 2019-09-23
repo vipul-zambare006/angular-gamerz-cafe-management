@@ -1,2 +1,16 @@
-<app-user-registration-form></app-user-registration-form>
+<mat-toolbar color="primary">
+    <span>Application Title</span>
+    <span class="example-fill-remaining-space"></span>
+</mat-toolbar>
+
+<mat-toolbar color="basic">
+    <button mat-raised-button color="primary" (click)="openUserRegitrationForm()">Enter user</button>
+    <span class="example-fill-remaining-space"></span>
+</mat-toolbar>
+
+<app-current-user-entry-table></app-current-user-entry-table>
+
+
+<!-- <app-user-registration-form></app-user-registration-form> -->
+
 <router-outlet></router-outlet>
