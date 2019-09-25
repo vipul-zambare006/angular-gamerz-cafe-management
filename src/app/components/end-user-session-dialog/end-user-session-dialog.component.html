@@ -1,0 +1,16 @@
+<div class="example-container pt-4">
+    <div mat-dialog-title class="pb-2">
+        <h5>End user session:</h5>
+    </div>
+    <form mat-dialog-content [formGroup]="userEntryForm">
+        <h6>Name: {{data.name}}</h6>
+        <mat-form-field>
+            <input matInput placeholder="End Time" formControlName="endTime">
+        </mat-form-field>
+        <div class="pt-2" mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancel</button>
+            <button mat-raised-button color="primary" [mat-dialog-close]="data" type="submit" (click)="endUserSession()"
+                cdkFocusInitial>End Session</button>
+        </div>
+    </form>
+</div>
