@@ -13,48 +13,69 @@
 <!-- 
 <div class="row">
   <div class="col-md-6 offset-md-2">-->
-    <div class="example-container pt-4"> 
+<div class="example-container pt-4">
 
-      <div mat-dialog-title class="pb-2">
-        <h5>User Entry Form:</h5>
-      </div>
+  <div mat-dialog-title class="pb-2">
+    <h5>User Entry Form:</h5>
+  </div>
 
-      <form mat-dialog-content [formGroup]="userEntryForm" (ngSubmit)="doUserEntry()">
+  <form mat-dialog-content [formGroup]="userEntryForm" (ngSubmit)="doUserEntry()">
+    <mat-form-field>
+      <mat-select placeholder="Select Branch">
+        <mat-option value="Dombivli">Dombivli</mat-option>
+        <mat-option value="Thane">Thane</mat-option>
+        <mat-option value="Andheri">Andheri</mat-option>
+        <mat-option value="Navi Mumbai">Navi Mumbai</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Name" autocomplete="off" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Phone number" autocomplete="off" formControlName="phone">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+
+
+    <table class="time-format-table" cellspacing="0">
+      <td>
         <mat-form-field>
-          <mat-select placeholder="Select Branch">
-            <mat-option value="Dombivli">Dombivli</mat-option>
-            <mat-option value="Thane">Thane</mat-option>
-            <mat-option value="Andheri">Andheri</mat-option>
-            <mat-option value="Navi Mumbai">Navi Mumbai</mat-option>
+          <input matInput placeholder="hh" formControlName="startTime">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field><input matInput placeholder="mm" formControlName="startTime"></mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <mat-label>AM/PM</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let format of timeFormat" [value]="format">
+              {{format}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
-
-        <mat-form-field>
-          <input matInput placeholder="Name" formControlName="name">
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput placeholder="Phone number" formControlName="phone">
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput placeholder="Email" formControlName="email">
-        </mat-form-field>
+      </td>
+    </table>
 
 
-        <mat-form-field>
-          <input matInput placeholder="Start Time" formControlName="startTime">
-        </mat-form-field>
-<!-- 
+
+    <!-- 
         <div class="pt-2">
           <button mat-raised-button color="primary" type="submit">Submit</button>
           <button mat-button>Clear</button>
         </div> -->
-        <div class="pt-2" mat-dialog-actions>
-          <button mat-button (click)="onNoClick()">Cancel</button>
-          <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Submit</button>
-        </div>
-      </form>
+    <div class="pt-2" mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancel</button>
+      <button mat-raised-button color="primary" [mat-dialog-close]="data" (click)="doUserEntry()"
+        cdkFocusInitial>Submit</button>
     </div>
-  <!-- </div>
+  </form>
+</div>
+<!-- </div>
 </div> -->

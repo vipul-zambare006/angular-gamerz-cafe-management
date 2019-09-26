@@ -16,7 +16,7 @@ export interface DialogData{
 export class UserRegistrationFormDialogComponent implements OnInit {
   userEntryForm: FormGroup;
 
-
+  timeFormat: string[] = ['AM', 'PM']
 
   constructor(
     public dialogRef: MatDialogRef<UserRegistrationFormDialogComponent>,
@@ -39,5 +39,8 @@ export class UserRegistrationFormDialogComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  
+  doUserEntry() {
+    this.firebaseService.createUser(this.userEntryForm.value);
+  }
 }
