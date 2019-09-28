@@ -13,6 +13,8 @@ import { UserEntry } from 'src/app/interfaces/userEntry';
 export class UserRegistrationFormDialogComponent implements OnInit {
   userEntryForm: FormGroup;
 
+  timeFormat: string[] = ['AM', 'PM']
+
   constructor(
     public dialogRef: MatDialogRef<UserRegistrationFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UserEntry,
