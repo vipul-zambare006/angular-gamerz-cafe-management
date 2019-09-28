@@ -1,0 +1,37 @@
+<div class="example-container pt-4">
+  <div mat-dialog-title class="pb-2">
+    <h5>User Entry Form:</h5>
+  </div>
+  <form mat-dialog-content [formGroup]="userEntryForm">
+    <mat-form-field>
+      <mat-select placeholder="Select Branch">
+        <mat-option value="Dombivli">Dombivli</mat-option>
+        <mat-option value="Thane">Thane</mat-option>
+        <mat-option value="Andheri">Andheri</mat-option>
+        <mat-option value="Navi Mumbai">Navi Mumbai</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Name" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Phone number" formControlName="phone">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Start Time" formControlName="startTime">
+    </mat-form-field>
+
+    <div class="pt-2" mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancel</button>
+      <button mat-raised-button color="primary" [mat-dialog-close]="data" type="submit" (click)="doUserEntry()"
+        cdkFocusInitial>Submit</button>
+    </div>
+  </form>
+</div>

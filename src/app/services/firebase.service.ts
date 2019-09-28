@@ -14,8 +14,8 @@ export class FirebaseService {
         return this.db.collection('UserEntry').doc(userKey).snapshotChanges();
     }
 
-    updateUser(userKey, value) {
-        value.nameToSearch = value.name.toLowerCase();
+    updateUser(userKey, value: UserEntry) {
+        // value.nameToSearch = value.name.toLowerCase();
         return this.db.collection('UserEntry').doc(userKey).set(value);
     }
 
@@ -40,14 +40,13 @@ export class FirebaseService {
 
 
     createUser(value) {
-        debugger;
-        return this.db.collection('UserEntry').add({
-            branchId: 1,
-            name: value.name,
-            phone: value.phone,
-            email: value.email,
-            startTime: value.startTime,
-            endTime: '3:00 PM'
-        });
+        // return this.db.collection('UserEntry').add({
+        //     branchId: 1,
+        //     name: value.name,
+        //     phone: value.phone,
+        //     email: value.email,
+        //     startTime: value.startTime,
+        //     endTime: '3:00 PM'
+        // });
     }
 }
