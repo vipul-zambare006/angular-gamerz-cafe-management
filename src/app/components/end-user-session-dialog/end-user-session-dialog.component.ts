@@ -5,6 +5,7 @@ import { UserRegistrationFormDialogComponent } from '../user-registration-form-d
 import { UserEntry } from 'src/app/interfaces/userEntry';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { AppService } from 'src/app/app.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-end-user-session-dialog',
@@ -13,6 +14,7 @@ import { AppService } from 'src/app/app.service';
 })
 export class EndUserSessionDialogComponent implements OnInit {
   userEntryForm: FormGroup;
+  showBill = new BehaviorSubject<boolean>(false);
 
   constructor(
     public dialogRef: MatDialogRef<UserRegistrationFormDialogComponent>,
@@ -50,5 +52,9 @@ export class EndUserSessionDialogComponent implements OnInit {
   }
   endUserSession() {
     this.firebaseService.updateUser(this.data.id, this.userEntryForm.value)
+  }
+
+  calculateBill(){
+    this.showBill.next(true);
   }
 }

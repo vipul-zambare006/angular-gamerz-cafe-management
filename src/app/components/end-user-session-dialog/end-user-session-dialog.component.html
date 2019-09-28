@@ -1,16 +1,33 @@
 <div class="example-container pt-4">
     <div mat-dialog-title class="pb-2">
         <h5>End user session:</h5>
+        <hr>
     </div>
     <form mat-dialog-content [formGroup]="userEntryForm">
         <h6>Name: {{data.name}}</h6>
-        <mat-form-field>
-            <input matInput placeholder="End Time" formControlName="endTime">
-        </mat-form-field>
-        <div class="pt-2" mat-dialog-actions>
-            <button mat-button (click)="onNoClick()">Cancel</button>
-            <button mat-raised-button color="primary" [mat-dialog-close]="data" type="submit" (click)="endUserSession()"
-                cdkFocusInitial>End Session</button>
-        </div>
+        <h6>Start time: {{data.startTime}}</h6>
+            <div class="row pt-2">
+                <div class="col-md-8">
+                    <mat-form-field>
+                        <input matInput placeholder="End Time" formControlName="endTime">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2 pl-2">
+                    <button mat-raised-button color="primary" (click)="calculateBill()" cdkFocusInitial>Calculate
+                        bill</button>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <h5 *ngIf="showBill|async">
+                    Total bill is: 50rs.
+                </h5>
+            </div>
+
+            <div class="pt-2" mat-dialog-actions>
+                <button mat-button (click)="onNoClick()">Cancel</button>
+                <button mat-raised-button color="primary" [mat-dialog-close]="data" type="submit"
+                    (click)="endUserSession()" cdkFocusInitial>End Session</button>
+            </div>
     </form>
 </div>

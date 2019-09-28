@@ -22,6 +22,7 @@ import { FirebaseService } from './services/firebase.service';
 import { UserRegistrationFormDialogComponent } from './components/user-registration-form-dialog/user-registration-form-dialog.component';
 import { CurrentUserEntryTableComponent } from './components/current-user-entry-table/current-user-entry-table.component';
 import { EndUserSessionDialogComponent } from './components/end-user-session-dialog/end-user-session-dialog.component';
+import { UserEntryHistoryComponent } from './components/user-entry-history/user-entry-history.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { EndUserSessionDialogComponent } from './components/end-user-session-dia
     UserRegistrationFormDialogComponent,
     CurrentUserEntryTableComponent,
     EndUserSessionDialogComponent,
+    UserEntryHistoryComponent,
   ],
   imports: [
     BrowserModule,

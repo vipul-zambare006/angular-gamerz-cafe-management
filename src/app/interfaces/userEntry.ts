@@ -7,4 +7,6 @@ export interface UserEntry {
     branchId: string;
     endTime: string;
     createdDate: string;
+    totalTime?: string;
+    totalPrice?: string;
 }
