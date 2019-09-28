@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserEntry } from 'src/app/interfaces/userEntry';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { AppService } from 'src/app/app.service';
+import { MatDialog } from '@angular/material';
+import { UserRegistrationFormDialogComponent } from '../user-registration-form-dialog/user-registration-form-dialog.component';
+import { EndUserSessionDialogComponent } from '../end-user-session-dialog/end-user-session-dialog.component';
 
 @Component({
   selector: 'app-current-user-entry-table',
@@ -18,7 +21,8 @@ export class CurrentUserEntryTableComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private firebaseService: FirebaseService,
-    private appService: AppService) {
+    private appService: AppService,
+    public dialog: MatDialog) {
     this.userEntryForm = this.formBuilder.group({
       name: '',
       phone: '',
@@ -70,6 +74,31 @@ export class CurrentUserEntryTableComponent implements OnInit {
   }
 
   deleteUserEntry(userKey: string) {
+  }
+
+
+  openEditUserEntryDialoge(userEntry: UserEntry) {
+    const dialogRef = this.dialog.open(UserRegistrationFormDialogComponent, {
+      width: '600px',
+      height: '600px',
+      data: userEntry
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+
+  openEndSessionDialog(userEntry: UserEntry) {
+    const dialogRef = this.dialog.open(EndUserSessionDialogComponent, {
+      width: '600px',
+      height: '600px',
+      data: userEntry
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

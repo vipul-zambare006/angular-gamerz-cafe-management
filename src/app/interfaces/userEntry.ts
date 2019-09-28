@@ -6,4 +6,5 @@ export interface UserEntry {
     startTime: string;
     branchId: string;
     endTime: string;
+    createdDate: string;
 }

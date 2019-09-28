@@ -1,25 +1,8 @@
-<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1>
-<div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.animal">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
-</div> -->
-
-<!-- 
-<div class="row">
-  <div class="col-md-6 offset-md-2">-->
 <div class="example-container pt-4">
-
   <div mat-dialog-title class="pb-2">
     <h5>User Entry Form:</h5>
   </div>
-
-  <form mat-dialog-content [formGroup]="userEntryForm" (ngSubmit)="doUserEntry()">
+  <form mat-dialog-content [formGroup]="userEntryForm">
     <mat-form-field>
       <mat-select placeholder="Select Branch">
         <mat-option value="Dombivli">Dombivli</mat-option>
@@ -30,18 +13,18 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Name" autocomplete="off" formControlName="name">
+      <input matInput placeholder="Name" formControlName="name">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Phone number" autocomplete="off" formControlName="phone">
+      <input matInput placeholder="Phone number" formControlName="phone">
     </mat-form-field>
 
     <mat-form-field>
       <input matInput placeholder="Email" formControlName="email">
     </mat-form-field>
 
-
+<!-- 
     <table class="time-format-table" cellspacing="0">
       <td>
         <mat-form-field>
@@ -63,19 +46,23 @@
       </td>
     </table>
 
-
-
-    <!-- 
-        <div class="pt-2">
-          <button mat-raised-button color="primary" type="submit">Submit</button>
-          <button mat-button>Clear</button>
-        </div> -->
     <div class="pt-2" mat-dialog-actions>
       <button mat-button (click)="onNoClick()">Cancel</button>
       <button mat-raised-button color="primary" [mat-dialog-close]="data" (click)="doUserEntry()"
         cdkFocusInitial>Submit</button>
     </div>
-  </form>
-</div>
+  </form> -->
+<!-- </div> -->
 <!-- </div>
 </div> -->
+    <mat-form-field>
+      <input matInput placeholder="Start Time" formControlName="startTime">
+    </mat-form-field>
+
+    <div class="pt-2" mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancel</button>
+      <button mat-raised-button color="primary" [mat-dialog-close]="data" type="submit" (click)="doUserEntry()"
+        cdkFocusInitial>Submit</button>
+    </div>
+  </form>
+</div>
