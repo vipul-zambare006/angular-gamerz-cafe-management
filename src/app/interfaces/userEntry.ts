@@ -1,12 +1,19 @@
 export interface UserEntry {
     id?: string;
+    branchId: string;
     name: string;
     phone: string;
     email: string;
-    startTime: string;
-    branchId: string;
-    endTime: string;
-    createdDate: string;
+
+    startTime_hh?:string,
+    startTime_mm?:string,
+    startTime_period?:string,
+
+    endTime_hh?:string,
+    endTime_mm?:string,
+    endTime_period?:string,
+
+    createdDate: Date;
     totalTime?: string;
     totalPrice?: string;
 }

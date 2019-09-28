@@ -4,7 +4,7 @@
   </div>
   <form mat-dialog-content [formGroup]="userEntryForm">
     <mat-form-field>
-      <mat-select placeholder="Select Branch">
+      <mat-select placeholder="Select Branch" formControlName="branchId">
         <mat-option value="Dombivli">Dombivli</mat-option>
         <mat-option value="Thane">Thane</mat-option>
         <mat-option value="Andheri">Andheri</mat-option>
@@ -23,21 +23,20 @@
     <mat-form-field>
       <input matInput placeholder="Email" formControlName="email">
     </mat-form-field>
-
-<!-- 
+ 
     <table class="time-format-table" cellspacing="0">
       <td>
         <mat-form-field>
-          <input matInput placeholder="hh" formControlName="startTime">
+          <input matInput placeholder="hh" formControlName="startTime_hh">
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field><input matInput placeholder="mm" formControlName="startTime"></mat-form-field>
+        <mat-form-field><input matInput placeholder="mm" formControlName="startTime_mm"></mat-form-field>
       </td>
       <td>
         <mat-form-field>
           <mat-label>AM/PM</mat-label>
-          <mat-select>
+          <mat-select formControlName="startTime_period">
             <mat-option *ngFor="let format of timeFormat" [value]="format">
               {{format}}
             </mat-option>
@@ -46,7 +45,8 @@
       </td>
     </table>
 
-    <div class="pt-2" mat-dialog-actions>
+
+<!--    <div class="pt-2" mat-dialog-actions>
       <button mat-button (click)="onNoClick()">Cancel</button>
       <button mat-raised-button color="primary" [mat-dialog-close]="data" (click)="doUserEntry()"
         cdkFocusInitial>Submit</button>
@@ -55,9 +55,9 @@
 <!-- </div> -->
 <!-- </div>
 </div> -->
-    <mat-form-field>
+    <!-- <mat-form-field>
       <input matInput placeholder="Start Time" formControlName="startTime">
-    </mat-form-field>
+    </mat-form-field> -->
 
     <div class="pt-2" mat-dialog-actions>
       <button mat-button (click)="onNoClick()">Cancel</button>

@@ -38,32 +38,32 @@ export class UserRegistrationFormComponent implements OnInit {
     //   branchId: "user.branchId",
     //   endTime: "user.endTime"
     // }]
-    this.displayUsers();
+   // this.displayUsers();
   }
 
   doUserEntry() {
     this.firebaseService.createUser(this.userEntryForm.value);
-    this.displayUsers();
+    // this.displayUsers();
   }
 
-  displayUsers() {
-    this.firebaseService.getAllUserEntry().subscribe((userEntries) => {
-      const datasource = [];
-      userEntries.forEach(x => {
-        const user: UserEntry = x.payload.doc.data() as UserEntry;
-        datasource.push({
-          id: x.payload.doc.id,
-          name: user.name,
-          phone: user.phone,
-          email: user.email,
-          startTime: user.startTime,
-          branchId: user.branchId,
-          endTime: user.endTime
-        });
-      });
-      this.userDataSource = datasource;
-    });
-  }
+  // displayUsers() {
+  //   this.firebaseService.getAllUserEntry().subscribe((userEntries) => {
+  //     const datasource = [];
+  //     userEntries.forEach(x => {
+  //       const user: UserEntry = x.payload.doc.data() as UserEntry;
+  //       datasource.push({
+  //         id: x.payload.doc.id,
+  //         name: user.name,
+  //         phone: user.phone,
+  //         email: user.email,
+  //         startTime: user.startTime,
+  //         branchId: user.branchId,
+  //         endTime: user.endTime
+  //       });
+  //     });
+  //     this.userDataSource = datasource;
+  //   });
+  // }
 
   editUserEntry(userKey: string) {
     console.log(userKey);

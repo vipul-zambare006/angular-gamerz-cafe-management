@@ -39,14 +39,8 @@ export class FirebaseService {
     // }
 
 
-    createUser(value) {
-        // return this.db.collection('UserEntry').add({
-        //     branchId: 1,
-        //     name: value.name,
-        //     phone: value.phone,
-        //     email: value.email,
-        //     startTime: value.startTime,
-        //     endTime: '3:00 PM'
-        // });
+    createUser(userEntry: UserEntry) {
+        debugger;
+        return this.db.collection('UserEntry').add(userEntry);
     }
 }

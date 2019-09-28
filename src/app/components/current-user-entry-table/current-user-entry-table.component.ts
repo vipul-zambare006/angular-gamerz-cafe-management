@@ -57,21 +57,18 @@ export class CurrentUserEntryTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.userDataSource = [{
-    //   id: '12121',
-    //   name: "Vipul",
-    //   phone: "QWeqeq",
-    //   email: "user.email",
-    //   startTime: "user.startTime",
-    //   branchId: "user.branchId",
-    //   endTime: "user.endTime"
-    // }]
     this.displayUsers();
   }
 
   doUserEntry() {
     this.firebaseService.createUser(this.userEntryForm.value);
     this.displayUsers();
+  }
+
+  formatTime(hr: string, min: string, period: string): string
+  {
+    debugger;
+    return `${hr}:${min} ${period}`;
   }
 
   displayUsers() {
@@ -84,20 +81,20 @@ export class CurrentUserEntryTableComponent implements OnInit {
           name: user.name,
           phone: user.phone,
           email: user.email,
-          startTime: user.startTime,
+          startTime: this.formatTime(user.startTime_hh,user.startTime_mm,user.startTime_period),
           branchId: user.branchId,
-          endTime: user.endTime,
+          endTime: user.endTime_hh ? this.formatTime(user.endTime_hh,user.endTime_mm,user.endTime_period):"-",
           totalTime: "1 Hr",
           totalPrice: "50"
         });
       });
 
       if(this.isHistoryTable){
-        this.userDataSource = datasource.filter((x: UserEntry) => x.endTime);
+        this.userDataSource = datasource.filter((x) => x.endTime);
       }
       else{
         debugger; 
-        this.userDataSource = datasource.filter((x: UserEntry) => !x.endTime);
+        this.userDataSource = datasource.filter((x) => x.endTime==="-");
       }
     });
   }

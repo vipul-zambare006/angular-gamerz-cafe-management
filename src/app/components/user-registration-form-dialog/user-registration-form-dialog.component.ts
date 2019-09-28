@@ -24,19 +24,24 @@ export class UserRegistrationFormDialogComponent implements OnInit {
 
 
     this.userEntryForm = this.formBuilder.group({
+      branchId:'',
       name: '',
       phone: '',
       email: '',
-      startTime: ''
+      startTime_hh: '',
+      startTime_mm: '',
+      startTime_period: '',
     });
 
     if (data) {
       this.userEntryForm.setValue({
+        branchId: data.branchId,
         name: data.name,
         phone: data.phone,
-        // branchId: data.branchId,
         email: data.email,
-        startTime: data.startTime,
+        startTime_hh: data.startTime_hh,
+      startTime_mm: data.startTime_mm,
+      startTime_period: data.startTime_period,
       });
     }
   }
@@ -48,11 +53,29 @@ export class UserRegistrationFormDialogComponent implements OnInit {
   ngOnInit() {
   }
 
+  formatTime(hr: string, min: string, period: string): string
+  {
+    debugger;
+    return `${hr}:${min} ${period}`;
+  }
+
   doUserEntry() {
+    debugger;
+    let newUserEntry: UserEntry = {
+      branchId: this.userEntryForm.get('branchId').value,
+      name:this.userEntryForm.get('name').value,
+      phone:this.userEntryForm.get('phone').value,
+      email:this.userEntryForm.get('email').value,
+      startTime_hh: this.userEntryForm.get('startTime_hh').value,
+      startTime_mm: this.userEntryForm.get('startTime_mm').value,
+      startTime_period: this.userEntryForm.get('startTime_period').value,
+      createdDate: new Date(),
+    }
+
     if (this.data) {
-      this.firebaseService.updateUser(this.data.id, this.userEntryForm.value);
+      this.firebaseService.updateUser(this.data.id, newUserEntry);
     } else {
-      this.firebaseService.createUser(this.userEntryForm.value);
+      this.firebaseService.createUser(newUserEntry);
     }
     this.displayUsers();
   }
@@ -68,9 +91,9 @@ export class UserRegistrationFormDialogComponent implements OnInit {
           name: user.name,
           phone: user.phone,
           email: user.email,
-          startTime: user.startTime,
+          startTime: this.formatTime(user.startTime_hh,user.startTime_mm,user.startTime_period),
           branchId: user.branchId,
-          endTime: user.endTime
+          endTime: user.endTime_hh ? this.formatTime(user.endTime_hh,user.endTime_mm,user.endTime_period):"-",
         });
       });
     });
