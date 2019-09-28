@@ -1,11 +1,17 @@
+
+
 <div class="row pl-4 pt-2">
   <div class="col-md-2">
-      <mat-form-field>
-          <input label="history-date" matInput placeholder="Enter date">
-        </mat-form-field>
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
         </div>
         <div class="col-md-2 pl-2">
           <button mat-raised-button color="primary" type="submit">Submit</button>
         </div>
   </div>
-<app-current-user-entry-table [isHistoryTable]="true"></app-current-user-entry-table>
+ 
+      <app-current-user-entry-table [isHistoryTable]="true"></app-current-user-entry-table>

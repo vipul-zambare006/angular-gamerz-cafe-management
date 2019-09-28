@@ -91,7 +91,14 @@ export class CurrentUserEntryTableComponent implements OnInit {
           totalPrice: "50"
         });
       });
-      this.userDataSource = datasource;
+
+      if(this.isHistoryTable){
+        this.userDataSource = datasource.filter((x: UserEntry) => x.endTime);
+      }
+      else{
+        debugger; 
+        this.userDataSource = datasource.filter((x: UserEntry) => !x.endTime);
+      }
     });
   }
 

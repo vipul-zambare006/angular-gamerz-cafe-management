@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-user-entry-history',
@@ -6,10 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-entry-history.component.scss']
 })
 export class UserEntryHistoryComponent implements OnInit {
-
   constructor() { }
-
-  ngOnInit() {
-  }
-
+   ngOnInit(){}
 }
+  
