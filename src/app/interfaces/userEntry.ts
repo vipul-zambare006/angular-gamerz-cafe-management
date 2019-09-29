@@ -5,15 +5,15 @@ export interface UserEntry {
     phone: string;
     email: string;
 
-    startTime_hh?:string,
-    startTime_mm?:string,
-    startTime_period?:string,
+    startTime_hh?: string;
+    startTime_mm?: string;
+    startTime_period?: string;
 
-    endTime_hh?:string,
-    endTime_mm?:string,
-    endTime_period?:string,
+    endTime_hh?: string;
+    endTime_mm?: string;
+    endTime_period?: string;
 
     createdDate: Date;
-    totalTime?: string;
+    totalTime?: number;
     totalPrice?: string;
 }
