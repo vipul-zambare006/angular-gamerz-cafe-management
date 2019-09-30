@@ -33,7 +33,6 @@ export class CurrentUserEntryTableComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private firebaseService: FirebaseService,
-    private appService: AppService,
     public dialog: MatDialog) {
     this.userEntryForm = this.formBuilder.group({
       name: '',
@@ -48,11 +47,11 @@ export class CurrentUserEntryTableComponent implements OnInit {
     this.displayedColumns = [];
     if (this.isHistoryTable) {
       this.displayedColumns = ['name', 'phone', 'email', 'startTime', 'endTime', 'totalTime', 'totalPrice']
-      this.tableTitle = "Users entries on 20-Sep-2019: "
+      this.tableTitle = 'Users entries on 20-Sep-2019: '
     }
     else {
       this.displayedColumns = ['name', 'phone', 'email', 'startTime', 'endTime', 'edit', 'delete'];
-      this.tableTitle = "Current logged in users: "
+      this.tableTitle = 'Current logged in users: '
     }
   }
 
@@ -82,8 +81,8 @@ export class CurrentUserEntryTableComponent implements OnInit {
           startTime: this.formatTime(user.startTime_hh, user.startTime_mm, user.startTime_period),
           branchId: user.branchId,
           endTime: user.endTime_hh ? this.formatTime(user.endTime_hh, user.endTime_mm, user.endTime_period) : "-",
-          totalTime: '1 Hr',
-          totalPrice: '50'
+          totalTime: user.totalTime,
+          totalPrice: user.totalPrice
         });
       });
 
@@ -94,14 +93,6 @@ export class CurrentUserEntryTableComponent implements OnInit {
       }
     });
   }
-
-  editUserEntry(userKey: string) {
-    console.log(userKey);
-  }
-
-  deleteUserEntry(userKey: string) {
-  }
-
 
   openEditUserEntryDialoge(userEntry: UserEntry) {
     const dialogRef = this.dialog.open(UserRegistrationFormDialogComponent, {
@@ -114,7 +105,6 @@ export class CurrentUserEntryTableComponent implements OnInit {
     });
   }
 
-
   openEndSessionDialog(userEntry: UserEntry) {
     const dialogRef = this.dialog.open(EndUserSessionDialogComponent, {
       width: '400px',
@@ -126,5 +116,4 @@ export class CurrentUserEntryTableComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-
 }
