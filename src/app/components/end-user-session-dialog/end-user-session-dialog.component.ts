@@ -15,7 +15,8 @@ import { BehaviorSubject } from 'rxjs';
 export class EndUserSessionDialogComponent implements OnInit {
   userEntryForm: FormGroup;
   showBill = new BehaviorSubject<boolean>(false);
-  timeFormat: string[] = ['AM', 'PM']
+  billAmount: string;
+  timeFormat: string[] = ['AM', 'PM'];
 
   constructor(
     public dialogRef: MatDialogRef<UserRegistrationFormDialogComponent>,
@@ -43,23 +44,19 @@ export class EndUserSessionDialogComponent implements OnInit {
   }
 
   timeConvertor(time) {
-    let PM = time.match('PM') ? true : false;
-    time = time.split(':');
-    let min = time[1];
-    let hour = 0;
-
-    if (PM) {
-      hour = 12 + parseInt(time[0], 10)
-      // let sec = time[2].replace('PM', '')
-    } else {
-      hour = time[0]
-      // let sec = time[2].replace('AM', '')
+    const timeString: string[] = time.split(' ');
+    const PM = timeString[1].match('PM') ? true : false;
+    time = timeString[0].split(':');
+    const min = parseInt(time[1], 10);
+    let hour = 12;
+    if (parseInt(time[0], 10) !== 12) {
+      hour = PM ? 12 + parseInt(time[0], 10) : time[0];
     }
     return { hour, min };
-    // console.log(hour + ':' + min + ':' + sec)
   }
 
   endUserSession() {
+    debugger;
     let userEntry: UserEntry;
     this.firebaseService.getUser(this.data.id).subscribe(x => {
       userEntry = x;
@@ -67,20 +64,20 @@ export class EndUserSessionDialogComponent implements OnInit {
       userEntry.endTime_mm = this.userEntryForm.get('endTime_mm').value;
       userEntry.endTime_period = this.userEntryForm.get('endTime_period').value;
 
-
       const startTime24Hrs = this.timeConvertor(this.data.startTime);
-      const endTime24Hrs = this.timeConvertor(`${userEntry.endTime_hh}:${userEntry.endTime_mm}${userEntry.endTime_period}`);
+      const endTime24Hrs = this.timeConvertor(`${userEntry.endTime_hh}:${userEntry.endTime_mm} ${userEntry.endTime_period}`);
 
-      let start = new Date().setHours(startTime24Hrs.hour, startTime24Hrs.min);
-      let end = new Date().setHours(endTime24Hrs.hour, endTime24Hrs.min);
+      const start = new Date().setHours(startTime24Hrs.hour, startTime24Hrs.min);
+      const end = new Date().setHours(endTime24Hrs.hour, endTime24Hrs.min);
       let diffrence = end - start;
 
       diffrence /= 1000;
 
       const timeInMin = diffrence / 60;
-      userEntry.totalTime = timeInMin;
+      userEntry.totalTime = Math.floor(timeInMin);
       console.log(`time in min:`, timeInMin);
-
+      userEntry.totalPrice = timeInMin * (60 / 50);
+      this.billAmount = userEntry.totalPrice.toString();
       this.firebaseService.updateUser(this.data.id, userEntry);
     });
   }

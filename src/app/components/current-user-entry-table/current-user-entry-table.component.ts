@@ -28,7 +28,7 @@ export class CurrentUserEntryTableComponent implements OnInit {
   userEntryForm: FormGroup;
   displayedColumns: string[];
   userDataSource: UserEntry[] = [];
-  tableTitle:string;
+  tableTitle: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,11 +48,11 @@ export class CurrentUserEntryTableComponent implements OnInit {
     this.displayedColumns = [];
     if (this.isHistoryTable) {
       this.displayedColumns = ['name', 'phone', 'email', 'startTime', 'endTime', 'totalTime', 'totalPrice']
-      this.tableTitle="Users entries on 20-Sep-2019: "
+      this.tableTitle = "Users entries on 20-Sep-2019: "
     }
     else {
       this.displayedColumns = ['name', 'phone', 'email', 'startTime', 'endTime', 'edit', 'delete'];
-      this.tableTitle="Current logged in users: "
+      this.tableTitle = "Current logged in users: "
     }
   }
 
@@ -65,9 +65,7 @@ export class CurrentUserEntryTableComponent implements OnInit {
     this.displayUsers();
   }
 
-  formatTime(hr: string, min: string, period: string): string
-  {
-    debugger;
+  formatTime(hr: string, min: string, period: string): string {
     return `${hr}:${min} ${period}`;
   }
 
@@ -81,20 +79,18 @@ export class CurrentUserEntryTableComponent implements OnInit {
           name: user.name,
           phone: user.phone,
           email: user.email,
-          startTime: this.formatTime(user.startTime_hh,user.startTime_mm,user.startTime_period),
+          startTime: this.formatTime(user.startTime_hh, user.startTime_mm, user.startTime_period),
           branchId: user.branchId,
-          endTime: user.endTime_hh ? this.formatTime(user.endTime_hh,user.endTime_mm,user.endTime_period):"-",
-          totalTime: "1 Hr",
-          totalPrice: "50"
+          endTime: user.endTime_hh ? this.formatTime(user.endTime_hh, user.endTime_mm, user.endTime_period) : "-",
+          totalTime: '1 Hr',
+          totalPrice: '50'
         });
       });
 
-      if(this.isHistoryTable){
+      if (this.isHistoryTable) {
         this.userDataSource = datasource.filter((x) => x.endTime);
-      }
-      else{
-        debugger; 
-        this.userDataSource = datasource.filter((x) => x.endTime==="-");
+      } else {
+        this.userDataSource = datasource.filter((x) => x.endTime === '-');
       }
     });
   }

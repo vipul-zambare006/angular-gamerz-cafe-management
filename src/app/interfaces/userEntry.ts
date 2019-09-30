@@ -15,5 +15,5 @@ export interface UserEntry {
 
     createdDate: Date;
     totalTime?: number;
-    totalPrice?: string;
+    totalPrice?: number;
 }
