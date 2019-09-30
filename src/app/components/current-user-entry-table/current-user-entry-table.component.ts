@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserEntry } from 'src/app/interfaces/userEntry';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -14,9 +14,21 @@ import { EndUserSessionDialogComponent } from '../end-user-session-dialog/end-us
 })
 export class CurrentUserEntryTableComponent implements OnInit {
 
+  _isHistoryTable: boolean;
+  get isHistoryTable(): boolean {
+    return this._isHistoryTable;
+  }
+
+  @Input('isHistoryTable')
+  set isHistoryTable(value: boolean) {
+    this._isHistoryTable = value;
+    this.setTableColumns();
+  }
+
   userEntryForm: FormGroup;
-  displayedColumns: string[] = ['name', 'phone', 'email', 'startTime', 'endTime', 'edit', 'delete'];
+  displayedColumns: string[];
   userDataSource: UserEntry[] = [];
+  tableTitle:string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,25 +41,34 @@ export class CurrentUserEntryTableComponent implements OnInit {
       email: '',
       startTime: ''
     });
+    this.setTableColumns();
+  }
 
+  setTableColumns() {
+    this.displayedColumns = [];
+    if (this.isHistoryTable) {
+      this.displayedColumns = ['name', 'phone', 'email', 'startTime', 'endTime', 'totalTime', 'totalPrice']
+      this.tableTitle="Users entries on 20-Sep-2019: "
+    }
+    else {
+      this.displayedColumns = ['name', 'phone', 'email', 'startTime', 'endTime', 'edit', 'delete'];
+      this.tableTitle="Current logged in users: "
+    }
   }
 
   ngOnInit() {
-    // this.userDataSource = [{
-    //   id: '12121',
-    //   name: "Vipul",
-    //   phone: "QWeqeq",
-    //   email: "user.email",
-    //   startTime: "user.startTime",
-    //   branchId: "user.branchId",
-    //   endTime: "user.endTime"
-    // }]
     this.displayUsers();
   }
 
   doUserEntry() {
     this.firebaseService.createUser(this.userEntryForm.value);
     this.displayUsers();
+  }
+
+  formatTime(hr: string, min: string, period: string): string
+  {
+    debugger;
+    return `${hr}:${min} ${period}`;
   }
 
   displayUsers() {
@@ -60,12 +81,21 @@ export class CurrentUserEntryTableComponent implements OnInit {
           name: user.name,
           phone: user.phone,
           email: user.email,
-          startTime: user.startTime,
+          startTime: this.formatTime(user.startTime_hh,user.startTime_mm,user.startTime_period),
           branchId: user.branchId,
-          endTime: user.endTime
+          endTime: user.endTime_hh ? this.formatTime(user.endTime_hh,user.endTime_mm,user.endTime_period):"-",
+          totalTime: "1 Hr",
+          totalPrice: "50"
         });
       });
-      this.userDataSource = datasource;
+
+      if(this.isHistoryTable){
+        this.userDataSource = datasource.filter((x) => x.endTime);
+      }
+      else{
+        debugger; 
+        this.userDataSource = datasource.filter((x) => x.endTime==="-");
+      }
     });
   }
 
@@ -91,8 +121,8 @@ export class CurrentUserEntryTableComponent implements OnInit {
 
   openEndSessionDialog(userEntry: UserEntry) {
     const dialogRef = this.dialog.open(EndUserSessionDialogComponent, {
-      width: '600px',
-      height: '600px',
+      width: '400px',
+      height: '400px',
       data: userEntry
     });
 

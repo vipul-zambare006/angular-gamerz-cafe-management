@@ -10,8 +10,8 @@ export class FirebaseService {
 
     constructor(public db: AngularFirestore) { }
 
-    getUser(userKey) {
-        return this.db.collection('UserEntry').doc(userKey).snapshotChanges();
+    getUser(userKey): Observable<UserEntry> {
+        return this.db.collection('UserEntry').doc(userKey).valueChanges() as Observable<UserEntry>;
     }
 
     updateUser(userKey, value: UserEntry) {
@@ -25,7 +25,7 @@ export class FirebaseService {
 
     getAllUserEntry() {
         // return this.db.collection('UserEntry').valueChanges(); //this will return me just data 
-        return this.db.collection('UserEntry').snapshotChanges()
+        return this.db.collection('UserEntry').snapshotChanges();
     }
 
     // searchUserEntry(searchValue) {
@@ -38,15 +38,7 @@ export class FirebaseService {
     //     return this.db.collection('UserEntry', ref => ref.orderBy('age').startAt(value)).snapshotChanges();
     // }
 
-
-    createUser(value) {
-        return this.db.collection('UserEntry').add({
-            branchId: 1,
-            name: value.name,
-            phone: value.phone,
-            email: value.email,
-            startTime: value.startTime,
-            endTime: '-'
-        });
+    createUser(userEntry: UserEntry) {
+        return this.db.collection('UserEntry').add(userEntry);
     }
 }

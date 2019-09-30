@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { UserRegistrationFormDialogComponent } from './components/user-registration-form-dialog/user-registration-form-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { UserRegistrationFormDialogComponent } from './components/user-registrat
 export class AppComponent {
   title = 'angular-cyber-cafe-management';
 
-  constructor(public dialog: MatDialog){
+  constructor(public dialog: MatDialog, private router: ActivatedRoute){
   }
 
   openUserRegitrationForm(){
