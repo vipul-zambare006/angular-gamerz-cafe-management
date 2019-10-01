@@ -8,6 +8,7 @@
         <h6>Start time: {{data.startTime}}</h6>
         <div class="row pt-2">
             <div class="col-md-8">
+                <h6>End time:</h6>
                 <table class="time-format-table" cellspacing="0">
                     <td>
                         <mat-form-field>
@@ -33,7 +34,7 @@
         </div>
 
         <div class="col-md-2 pl-2">
-            <button mat-raised-button color="primary" (click)="displayBill()" cdkFocusInitial>Calculate
+            <button mat-raised-button color="accent" (click)="displayBill()" cdkFocusInitial>Calculate
                 bill</button>
         </div>
 
@@ -43,7 +44,7 @@
             </h5>
         </div>
 
-        <div class="pt-2" mat-dialog-actions>
+        <div class="pt-4 pb-2" mat-dialog-actions>
             <button mat-button (click)="onNoClick()">Cancel</button>
             <button mat-raised-button color="primary" [mat-dialog-close]="data" type="submit" (click)="endUserSession()"
                 cdkFocusInitial>End Session</button>

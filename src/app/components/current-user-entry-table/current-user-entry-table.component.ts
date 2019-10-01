@@ -47,7 +47,7 @@ export class CurrentUserEntryTableComponent implements OnInit {
     this.displayedColumns = [];
     if (this.isHistoryTable) {
       this.displayedColumns = ['branchId', 'name', 'phone', 'email', 'startTime', 'endTime', 'totalTime', 'totalPrice']
-      this.tableTitle = 'Users entries on 20-Sep-2019: ';
+      this.tableTitle = `Users entries on ${new Date(Date.now()).toLocaleString().split(',')[0]}: `;
     } else {
       this.displayedColumns = ['branchId', 'name', 'phone', 'email', 'startTime', 'endTime', 'edit', 'delete'];
       this.tableTitle = 'Current logged in users: ';
@@ -106,7 +106,7 @@ export class CurrentUserEntryTableComponent implements OnInit {
 
   openEndSessionDialog(userEntry: UserEntry) {
     const dialogRef = this.dialog.open(EndUserSessionDialogComponent, {
-      width: '400px',
+      width: '600px',
       height: '400px',
       data: userEntry
     });
