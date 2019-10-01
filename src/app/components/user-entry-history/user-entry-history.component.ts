@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-user-entry-history',
@@ -7,6 +8,10 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./user-entry-history.component.scss']
 })
 export class UserEntryHistoryComponent implements OnInit {
-  constructor() { }
+  constructor(private firebaseService: FirebaseService) { }
   ngOnInit() { }
+
+  deleteAllUsers() {
+    return this.firebaseService.deleteAllUserEntries();
+  }
 }

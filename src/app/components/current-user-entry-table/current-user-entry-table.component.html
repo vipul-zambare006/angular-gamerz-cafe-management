@@ -2,6 +2,12 @@
   <div class="col-md-12 p-4">
     <h4>{{tableTitle}}</h4>
     <table mat-table [dataSource]="userDataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="branchId">
+        <th mat-header-cell *matHeaderCellDef> Branch </th>
+        <td mat-cell *matCellDef="let element"> {{element.branchId}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -46,18 +52,16 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-
-
       <ng-template #showTimePrice>
-          <ng-container matColumnDef="totalTime">
-              <th mat-header-cell *matHeaderCellDef> Total Time </th>
-              <td mat-cell *matCellDef="let element"> {{element.totalTime}} </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="totalPrice">
-              <th mat-header-cell *matHeaderCellDef>Total Price</th>
-              <td mat-cell *matCellDef="let element"> {{element.totalPrice}} &#8377;</td>
-            </ng-container>
+        <ng-container matColumnDef="totalTime">
+          <th mat-header-cell *matHeaderCellDef> Total Time (in min.)</th>
+          <td mat-cell *matCellDef="let element"> {{element.totalTime}} min</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPrice">
+          <th mat-header-cell *matHeaderCellDef>Total Price</th>
+          <td mat-cell *matCellDef="let element">&#8377; {{element.totalPrice}}</td>
+        </ng-container>
       </ng-template>
 
     </table>

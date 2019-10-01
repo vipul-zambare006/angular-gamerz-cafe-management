@@ -33,13 +33,13 @@
         </div>
 
         <div class="col-md-2 pl-2">
-            <button mat-raised-button color="primary" (click)="calculateBill()" cdkFocusInitial>Calculate
+            <button mat-raised-button color="primary" (click)="displayBill()" cdkFocusInitial>Calculate
                 bill</button>
         </div>
 
         <div class="pt-2">
             <h5 *ngIf="showBill|async">
-                Total bill is: {{billAmount}}rs.
+                Total bill is: {{totalBillAmount}}rs.
             </h5>
         </div>
 

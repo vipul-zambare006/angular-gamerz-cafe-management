@@ -15,7 +15,8 @@ import { BehaviorSubject } from 'rxjs';
 export class EndUserSessionDialogComponent implements OnInit {
   userEntryForm: FormGroup;
   showBill = new BehaviorSubject<boolean>(false);
-  billAmount: string;
+  totalBillAmount: number;
+  totalTime: number;
   timeFormat: string[] = ['AM', 'PM'];
 
   constructor(
@@ -56,33 +57,44 @@ export class EndUserSessionDialogComponent implements OnInit {
   }
 
   endUserSession() {
-    debugger;
     let userEntry: UserEntry;
     this.firebaseService.getUser(this.data.id).subscribe(x => {
       userEntry = x;
       userEntry.endTime_hh = this.userEntryForm.get('endTime_hh').value;
       userEntry.endTime_mm = this.userEntryForm.get('endTime_mm').value;
       userEntry.endTime_period = this.userEntryForm.get('endTime_period').value;
-
-      const startTime24Hrs = this.timeConvertor(this.data.startTime);
-      const endTime24Hrs = this.timeConvertor(`${userEntry.endTime_hh}:${userEntry.endTime_mm} ${userEntry.endTime_period}`);
-
-      const start = new Date().setHours(startTime24Hrs.hour, startTime24Hrs.min);
-      const end = new Date().setHours(endTime24Hrs.hour, endTime24Hrs.min);
-      let diffrence = end - start;
-
-      diffrence /= 1000;
-
-      const timeInMin = diffrence / 60;
-      userEntry.totalTime = Math.floor(timeInMin);
-      console.log(`time in min:`, timeInMin);
-      userEntry.totalPrice = timeInMin * (60 / 50);
-      this.billAmount = userEntry.totalPrice.toString();
+      this.calculateBill();
+      userEntry.totalPrice = this.totalBillAmount;
+      userEntry.totalTime = this.totalTime;
       this.firebaseService.updateUser(this.data.id, userEntry);
     });
   }
 
-  calculateBill() {
-    this.showBill.next(true);
+  private calculateBill() {
+    const startTime24Hrs = this.timeConvertor(this.data.startTime);
+    const endTimeHH = this.userEntryForm.get('endTime_hh').value;
+    const endTimeMM = this.userEntryForm.get('endTime_mm').value;
+    const endTimePeriod = this.userEntryForm.get('endTime_period').value;
+
+    const endTime24Hrs = this.timeConvertor(`${endTimeHH}:${endTimeMM} ${endTimePeriod}`);
+
+    const start = new Date().setHours(startTime24Hrs.hour, startTime24Hrs.min);
+    const end = new Date().setHours(endTime24Hrs.hour, endTime24Hrs.min);
+
+    let diffrence = end - start;
+    diffrence /= 1000;
+
+    const timeInMin = diffrence / 60;
+    this.totalTime = Math.floor(timeInMin);
+    this.totalBillAmount = timeInMin * (50 / 60);
+
+    console.log(`time in min:`, timeInMin);
+  }
+
+  displayBill() {
+    if (this.userEntryForm.get('endTime_hh').value) {
+      this.calculateBill();
+      this.showBill.next(true);
+    }
   }
 }

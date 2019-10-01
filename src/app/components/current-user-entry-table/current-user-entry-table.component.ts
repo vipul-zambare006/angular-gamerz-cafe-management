@@ -46,12 +46,11 @@ export class CurrentUserEntryTableComponent implements OnInit {
   setTableColumns() {
     this.displayedColumns = [];
     if (this.isHistoryTable) {
-      this.displayedColumns = ['name', 'phone', 'email', 'startTime', 'endTime', 'totalTime', 'totalPrice']
-      this.tableTitle = 'Users entries on 20-Sep-2019: '
-    }
-    else {
-      this.displayedColumns = ['name', 'phone', 'email', 'startTime', 'endTime', 'edit', 'delete'];
-      this.tableTitle = 'Current logged in users: '
+      this.displayedColumns = ['branchId', 'name', 'phone', 'email', 'startTime', 'endTime', 'totalTime', 'totalPrice']
+      this.tableTitle = 'Users entries on 20-Sep-2019: ';
+    } else {
+      this.displayedColumns = ['branchId', 'name', 'phone', 'email', 'startTime', 'endTime', 'edit', 'delete'];
+      this.tableTitle = 'Current logged in users: ';
     }
   }
 

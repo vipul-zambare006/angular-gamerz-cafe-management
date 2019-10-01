@@ -27,6 +27,14 @@ export class FirebaseService {
         return this.db.collection('UserEntry').snapshotChanges();
     }
 
+    deleteAllUserEntries() {
+        this.getAllUserEntry().subscribe((userEntries) => {
+            userEntries.forEach(x => {
+                this.deleteUser(x.payload.doc.id);
+            });
+        });
+    }
+
     // searchUserEntry(searchValue) {
     //     return this.db.collection('UserEntry', ref => ref.where('nameToSearch', '>=', searchValue)
     //         .where('nameToSearch', '<=', searchValue + '\uf8ff'))
