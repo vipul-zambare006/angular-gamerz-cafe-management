@@ -1,0 +1,8 @@
+package.json
+*.html
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.scss

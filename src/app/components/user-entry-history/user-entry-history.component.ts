@@ -8,6 +8,5 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UserEntryHistoryComponent implements OnInit {
   constructor() { }
-   ngOnInit(){}
+  ngOnInit() { }
 }
-  

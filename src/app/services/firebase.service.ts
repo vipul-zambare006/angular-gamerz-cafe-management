@@ -10,16 +10,15 @@ export class FirebaseService {
 
     constructor(public db: AngularFirestore) { }
 
-    getUser(userKey): Observable<UserEntry> {
+    getUser(userKey: string): Observable<UserEntry> {
         return this.db.collection('UserEntry').doc(userKey).valueChanges() as Observable<UserEntry>;
     }
 
-    updateUser(userKey, value: UserEntry) {
-        // value.nameToSearch = value.name.toLowerCase();
+    updateUser(userKey: string, value: UserEntry) {
         return this.db.collection('UserEntry').doc(userKey).set(value);
     }
 
-    deleteUser(userKey) {
+    deleteUser(userKey: string) {
         return this.db.collection('UserEntry').doc(userKey).delete();
     }
 
@@ -37,7 +36,6 @@ export class FirebaseService {
     // searchUserEntryByAge(value) {
     //     return this.db.collection('UserEntry', ref => ref.orderBy('age').startAt(value)).snapshotChanges();
     // }
-
 
     createUser(userEntry: UserEntry) {
         return this.db.collection('UserEntry').add(userEntry);

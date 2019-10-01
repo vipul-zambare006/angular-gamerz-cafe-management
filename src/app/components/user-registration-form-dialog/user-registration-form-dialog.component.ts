@@ -24,7 +24,7 @@ export class UserRegistrationFormDialogComponent implements OnInit {
 
 
     this.userEntryForm = this.formBuilder.group({
-      branchId:'',
+      branchId: '',
       name: '',
       phone: '',
       email: '',
@@ -40,8 +40,8 @@ export class UserRegistrationFormDialogComponent implements OnInit {
         phone: data.phone,
         email: data.email,
         startTime_hh: data.startTime_hh,
-      startTime_mm: data.startTime_mm,
-      startTime_period: data.startTime_period,
+        startTime_mm: data.startTime_mm,
+        startTime_period: data.startTime_period,
       });
     }
   }
@@ -53,19 +53,16 @@ export class UserRegistrationFormDialogComponent implements OnInit {
   ngOnInit() {
   }
 
-  formatTime(hr: string, min: string, period: string): string
-  {
-    debugger;
+  formatTime(hr: string, min: string, period: string): string {
     return `${hr}:${min} ${period}`;
   }
 
   doUserEntry() {
-    debugger;
     let newUserEntry: UserEntry = {
       branchId: this.userEntryForm.get('branchId').value,
-      name:this.userEntryForm.get('name').value,
-      phone:this.userEntryForm.get('phone').value,
-      email:this.userEntryForm.get('email').value,
+      name: this.userEntryForm.get('name').value,
+      phone: this.userEntryForm.get('phone').value,
+      email: this.userEntryForm.get('email').value,
       startTime_hh: this.userEntryForm.get('startTime_hh').value,
       startTime_mm: this.userEntryForm.get('startTime_mm').value,
       startTime_period: this.userEntryForm.get('startTime_period').value,
@@ -91,9 +88,9 @@ export class UserRegistrationFormDialogComponent implements OnInit {
           name: user.name,
           phone: user.phone,
           email: user.email,
-          startTime: this.formatTime(user.startTime_hh,user.startTime_mm,user.startTime_period),
+          startTime: this.formatTime(user.startTime_hh, user.startTime_mm, user.startTime_period),
           branchId: user.branchId,
-          endTime: user.endTime_hh ? this.formatTime(user.endTime_hh,user.endTime_mm,user.endTime_period):"-",
+          endTime: user.endTime_hh ? this.formatTime(user.endTime_hh, user.endTime_mm, user.endTime_period) : '-',
         });
       });
     });
