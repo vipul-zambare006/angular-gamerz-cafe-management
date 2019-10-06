@@ -2,8 +2,12 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { FirebaseService } from 'src/app/services/firebase.service';
+<<<<<<< HEAD
 import { UserEntry } from 'src/app/interfaces/userEntry';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+=======
+import { UserEntryModel } from 'src/app/interfaces/userEntry';
+>>>>>>> d7d920e... user entry model class
 
 @Component({
   selector: 'app-user-registration-form-dialog',
@@ -17,7 +21,7 @@ export class UserRegistrationFormDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<UserRegistrationFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: UserEntry,
+    @Inject(MAT_DIALOG_DATA) public data: UserEntryModel,
     private formBuilder: FormBuilder,
     private firebaseService: FirebaseService,
     private appService: AppService) {
@@ -34,14 +38,15 @@ export class UserRegistrationFormDialogComponent implements OnInit {
     });
 
     if (data) {
+      debugger;
       this.userEntryForm.setValue({
         branchId: data.branchId,
         name: data.name,
         phone: data.phone,
         email: data.email,
-        startTime_hh: data.startTime_hh,
-        startTime_mm: data.startTime_mm,
-        startTime_period: data.startTime_period,
+        startTime_hh: data.startTimeHH,
+        startTime_mm: data.startTimeMM,
+        startTime_period: data.startTimePeriod,
       });
     }
   }
@@ -58,21 +63,20 @@ export class UserRegistrationFormDialogComponent implements OnInit {
   }
 
   doUserEntry() {
-    let newUserEntry: UserEntry = {
-      branchId: this.userEntryForm.get('branchId').value,
-      name: this.userEntryForm.get('name').value,
-      phone: this.userEntryForm.get('phone').value,
-      email: this.userEntryForm.get('email').value,
-      startTime_hh: this.userEntryForm.get('startTime_hh').value,
-      startTime_mm: this.userEntryForm.get('startTime_mm').value,
-      startTime_period: this.userEntryForm.get('startTime_period').value,
-      createdDate: new Date(),
-    }
+    const userEntry = new UserEntryModel(
+      this.userEntryForm.get('branchId').value,
+      this.userEntryForm.get('name').value,
+      this.userEntryForm.get('phone').value,
+      this.userEntryForm.get('email').value,
+      this.userEntryForm.get('startTime_hh').value,
+      this.userEntryForm.get('startTime_mm').value,
+      this.userEntryForm.get('startTime_period').value
+    )
 
     if (this.data) {
-      this.firebaseService.updateUser(this.data.id, newUserEntry);
+      this.firebaseService.updateUser(this.data.id, userEntry);
     } else {
-      this.firebaseService.createUser(newUserEntry);
+      this.firebaseService.createUser(userEntry);
     }
     this.displayUsers();
   }
@@ -82,15 +86,15 @@ export class UserRegistrationFormDialogComponent implements OnInit {
     this.firebaseService.getAllUserEntry().subscribe((userEntries) => {
       const datasource = [];
       userEntries.forEach(x => {
-        const user: UserEntry = x.payload.doc.data() as UserEntry;
+        const user: UserEntryModel = x.payload.doc.data() as UserEntryModel;
         datasource.push({
           id: x.payload.doc.id,
           name: user.name,
           phone: user.phone,
           email: user.email,
-          startTime: this.formatTime(user.startTime_hh, user.startTime_mm, user.startTime_period),
+          startTime: user.startTimeFormatted,
           branchId: user.branchId,
-          endTime: user.endTime_hh ? this.formatTime(user.endTime_hh, user.endTime_mm, user.endTime_period) : '-',
+          endTime: user.endTimeHH ? user.endTimeFormatted : '-',
         });
       });
     });

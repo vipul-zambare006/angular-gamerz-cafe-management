@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserRegistrationFormDialogComponent } from '../user-registration-form-dialog/user-registration-form-dialog.component';
-import { UserEntry } from 'src/app/interfaces/userEntry';
+import { UserEntryModel } from 'src/app/interfaces/userEntry';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -57,12 +57,12 @@ export class EndUserSessionDialogComponent implements OnInit {
   }
 
   endUserSession() {
-    let userEntry: UserEntry;
+    let userEntry: UserEntryModel;
     this.firebaseService.getUser(this.data.id).subscribe(x => {
       userEntry = x;
-      userEntry.endTime_hh = this.userEntryForm.get('endTime_hh').value;
-      userEntry.endTime_mm = this.userEntryForm.get('endTime_mm').value;
-      userEntry.endTime_period = this.userEntryForm.get('endTime_period').value;
+      userEntry.endTimeHH = this.userEntryForm.get('endTime_hh').value;
+      userEntry.endTimeMM = this.userEntryForm.get('endTime_mm').value;
+      userEntry.endTimePeriod = this.userEntryForm.get('endTime_period').value;
       this.calculateBill();
       userEntry.totalPrice = this.totalBillAmount;
       userEntry.totalTime = this.totalTime;
@@ -86,7 +86,7 @@ export class EndUserSessionDialogComponent implements OnInit {
 
     const timeInMin = diffrence / 60;
     this.totalTime = Math.floor(timeInMin);
-    this.totalBillAmount = timeInMin * (50 / 60);
+    this.totalBillAmount = Math.ceil(timeInMin * (50 / 60));
 
     console.log(`time in min:`, timeInMin);
   }

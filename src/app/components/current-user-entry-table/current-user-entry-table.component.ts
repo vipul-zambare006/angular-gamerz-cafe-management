@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { UserEntry } from 'src/app/interfaces/userEntry';
+import { UserEntryModel } from 'src/app/interfaces/userEntry';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { AppService } from 'src/app/app.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,7 +27,7 @@ export class CurrentUserEntryTableComponent implements OnInit {
 
   userEntryForm: FormGroup;
   displayedColumns: string[];
-  userDataSource: UserEntry[] = [];
+  userDataSource: UserEntryModel[] = [];
   tableTitle: string;
 
   constructor(
@@ -71,15 +71,15 @@ export class CurrentUserEntryTableComponent implements OnInit {
     this.firebaseService.getAllUserEntry().subscribe((userEntries) => {
       const datasource = [];
       userEntries.forEach(x => {
-        const user: UserEntry = x.payload.doc.data() as UserEntry;
+        const user: UserEntryModel = x.payload.doc.data() as UserEntryModel;
         datasource.push({
           id: x.payload.doc.id,
           name: user.name,
           phone: user.phone,
           email: user.email,
-          startTime: this.formatTime(user.startTime_hh, user.startTime_mm, user.startTime_period),
+          startTime: user.startTimeFormatted,
           branchId: user.branchId,
-          endTime: user.endTime_hh ? this.formatTime(user.endTime_hh, user.endTime_mm, user.endTime_period) : "-",
+          endTime: user.endTimeHH ? user.endTimeFormatted : "-",
           totalTime: user.totalTime,
           totalPrice: user.totalPrice
         });
@@ -93,7 +93,7 @@ export class CurrentUserEntryTableComponent implements OnInit {
     });
   }
 
-  openEditUserEntryDialoge(userEntry: UserEntry) {
+  openEditUserEntryDialoge(userEntry: UserEntryModel) {
     const dialogRef = this.dialog.open(UserRegistrationFormDialogComponent, {
       width: '600px',
       height: '600px',
@@ -104,7 +104,7 @@ export class CurrentUserEntryTableComponent implements OnInit {
     });
   }
 
-  openEndSessionDialog(userEntry: UserEntry) {
+  openEndSessionDialog(userEntry: UserEntryModel) {
     const dialogRef = this.dialog.open(EndUserSessionDialogComponent, {
       width: '600px',
       height: '400px',

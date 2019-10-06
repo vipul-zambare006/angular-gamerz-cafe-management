@@ -1,6 +1,8 @@
 <div class="example-container pt-4">
   <div mat-dialog-title class="pb-2">
-    <h5>User Entry Form:</h5>
+    <div class="alert alert-dark" role="alert">
+      <h5>User Entry Form:</h5>
+    </div>
   </div>
   <form mat-dialog-content [formGroup]="userEntryForm">
     <mat-form-field>
@@ -24,16 +26,20 @@
       <input matInput placeholder="Email" formControlName="email">
     </mat-form-field>
 
-    <table class="time-format-table" cellspacing="0">
-      <td>
+
+    <div class="row time-picker">
+      <div class="col-md-12">
+        <span>Enter session start time (12 hrs format):</span>
+      </div>
+      <div class="col-md-2">
         <mat-form-field>
           <input matInput placeholder="hh" formControlName="startTime_hh">
         </mat-form-field>
-      </td>
-      <td>
+      </div>
+      <div class="col-md-2">
         <mat-form-field><input matInput placeholder="mm" formControlName="startTime_mm"></mat-form-field>
-      </td>
-      <td>
+      </div>
+      <div class="col-md-1">
         <mat-form-field>
           <mat-label>AM/PM</mat-label>
           <mat-select formControlName="startTime_period">
@@ -42,9 +48,8 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-      </td>
-    </table>
-
+      </div>
+    </div>
     <div class="pt-2" mat-dialog-actions>
       <button mat-button (click)="onNoClick()">Cancel</button>
       <button mat-raised-button color="primary" [mat-dialog-close]="data" type="submit" (click)="doUserEntry()"
