@@ -2,12 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { FirebaseService } from 'src/app/services/firebase.service';
-<<<<<<< HEAD
-import { UserEntry } from 'src/app/interfaces/userEntry';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-=======
 import { UserEntryModel } from 'src/app/interfaces/userEntry';
->>>>>>> d7d920e... user entry model class
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-registration-form-dialog',
@@ -38,15 +34,14 @@ export class UserRegistrationFormDialogComponent implements OnInit {
     });
 
     if (data) {
-      debugger;
       this.userEntryForm.setValue({
         branchId: data.branchId,
         name: data.name,
         phone: data.phone,
         email: data.email,
-        startTime_hh: data.startTimeHH,
-        startTime_mm: data.startTimeMM,
-        startTime_period: data.startTimePeriod,
+        startTime_hh: data.startTimeHH ? data.startTimeHH : '',
+        startTime_mm: data.startTimeMM ? data.startTimeMM : '',
+        startTime_period: data.startTimePeriod ? data.startTimePeriod : '',
       });
     }
   }
