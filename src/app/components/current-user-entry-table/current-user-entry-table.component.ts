@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserEntry } from 'src/app/interfaces/userEntry';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { AppService } from 'src/app/app.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { UserRegistrationFormDialogComponent } from '../user-registration-form-dialog/user-registration-form-dialog.component';
 import { EndUserSessionDialogComponent } from '../end-user-session-dialog/end-user-session-dialog.component';
 

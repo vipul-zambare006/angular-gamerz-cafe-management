@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AppService } from 'src/app/app.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UserEntry } from 'src/app/interfaces/userEntry';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-registration-form-dialog',

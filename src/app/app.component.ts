@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { UserRegistrationFormDialogComponent } from './components/user-registration-form-dialog/user-registration-form-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 
@@ -11,10 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 export class AppComponent {
   title = 'angular-cyber-cafe-management';
 
-  constructor(public dialog: MatDialog, private router: ActivatedRoute){
+  constructor(public dialog: MatDialog, private router: ActivatedRoute) {
   }
 
-  openUserRegitrationForm(){
+  openUserRegitrationForm() {
     const dialogRef = this.dialog.open(UserRegistrationFormDialogComponent, {
       width: '600px',
       height: '600px'

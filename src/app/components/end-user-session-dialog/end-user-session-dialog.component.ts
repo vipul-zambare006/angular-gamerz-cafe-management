@@ -2,9 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserRegistrationFormDialogComponent } from '../user-registration-form-dialog/user-registration-form-dialog.component';
 import { UserEntry } from 'src/app/interfaces/userEntry';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { BehaviorSubject } from 'rxjs';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({

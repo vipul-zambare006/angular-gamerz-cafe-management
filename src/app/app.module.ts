@@ -3,14 +3,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import 'hammerjs';
-import { MatFormField, MatSelect, MatOption } from '@angular/material';
+import { MatFormField } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOption } from '@angular/material/core';
 import { DemoMaterialModule } from './material-module';
 import { AppService } from './app.service';
-
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
@@ -19,6 +18,7 @@ import { UserRegistrationFormDialogComponent } from './components/user-registrat
 import { CurrentUserEntryTableComponent } from './components/current-user-entry-table/current-user-entry-table.component';
 import { EndUserSessionDialogComponent } from './components/end-user-session-dialog/end-user-session-dialog.component';
 import { UserEntryHistoryComponent } from './components/user-entry-history/user-entry-history.component';
+import { MatSelect } from '@angular/material/select';
 
 @NgModule({
   declarations: [
