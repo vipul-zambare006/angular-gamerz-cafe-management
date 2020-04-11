@@ -1,23 +1,3 @@
-// export interface UserEntry {
-//     id?: string;
-//     branchId: string;
-//     name: string;
-//     phone: string;
-//     email: string;
-
-//     startTime_hh?: string;
-//     startTime_mm?: string;
-//     startTime_period?: string;
-
-//     endTime_hh?: string;
-//     endTime_mm?: string;
-//     endTime_period?: string;
-
-//     createdDate: Date;
-//     totalTime?: number;
-//     totalPrice?: number;
-// }
-
 export class UserEntryModel {
     id?: string;
     branchId: string;
@@ -62,17 +42,23 @@ export class UserEntryModel {
         this.startTimeHH = startTimeHH;
         this.startTimeMM = startTimeMM;
         this.startTimePeriod = startTimePeriod;
-        this.startTimeFormatted = this.formatTime(startTimeHH, startTimeMM, startTimePeriod);
+        this.startTimeFormatted = formatTime(startTimeHH, startTimeMM, startTimePeriod);
         this.endTimeHH = endTimeHH;
         this.endTimeMM = endTimeMM;
         this.endTimePeriod = endTimePeriod;
-        this.endTimeFormatted = this.formatTime(endTimeHH, endTimeMM, endTimePeriod);
+        this.endTimeFormatted = formatTime(endTimeHH, endTimeMM, endTimePeriod);
         this.totalTime = totalTime;
         this.totalPrice = totalPrice;
         this.createdDate = new Date();
     }
+}
 
-    formatTime(hh: string, mm: string, period: string): string {
-        return `${hh}:${mm}${period}`;
+export function formatTime(hh: string, mm: string, period: string): string {
+    if (!hh && !mm && !period) {
+        return '-';
     }
+    hh = hh ? hh : '';
+    mm = mm ? mm : '';
+    period = period ? period : '';
+    return `${hh}:${mm}${period}`;
 }

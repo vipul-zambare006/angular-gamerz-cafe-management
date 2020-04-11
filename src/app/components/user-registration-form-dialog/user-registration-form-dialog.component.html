@@ -71,7 +71,7 @@
               (click)="onNoClick()">Cancel</button>
       <button mat-raised-button
               color="primary"
-              [mat-dialog-close]="data"
+              [mat-dialog-close]="currentUserEntry ? currentUserEntry.data : undefined"
               type="submit"
               (click)="doUserEntry()"
               cdkFocusInitial>Submit</button>

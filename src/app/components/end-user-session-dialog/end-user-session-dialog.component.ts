@@ -1,10 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { UserRegistrationFormDialogComponent } from '../user-registration-form-dialog/user-registration-form-dialog.component';
-import { UserEntryModel } from 'src/app/interfaces/userEntry';
-import { FirebaseService } from 'src/app/services/firebase.service';
-import { BehaviorSubject } from 'rxjs';
+import { Component, Inject } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
+import { formatTime, UserEntryModel } from 'src/app/interfaces/userEntry';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { CurrentEntryData } from '../current-user-entry-table/current-user-entry-table.component';
+import { UserRegistrationFormDialogComponent } from '../user-registration-form-dialog/user-registration-form-dialog.component';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './end-user-session-dialog.component.html',
   styleUrls: ['./end-user-session-dialog.component.scss']
 })
-export class EndUserSessionDialogComponent implements OnInit {
+export class EndUserSessionDialogComponent {
   userEntryForm: FormGroup;
   showBill = new BehaviorSubject<boolean>(false);
   totalBillAmount: number;
@@ -21,7 +22,7 @@ export class EndUserSessionDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<UserRegistrationFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public currentUserEntry: CurrentEntryData,
     private formBuilder: FormBuilder,
     private firebaseService: FirebaseService) {
 
@@ -40,43 +41,40 @@ export class EndUserSessionDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit() {
-
-  }
-
-  timeConvertor(time) {
-    const timeString: string[] = time.split(' ');
-    const PM = timeString[1].match('PM') ? true : false;
-    time = timeString[0].split(':');
-    const min = parseInt(time[1], 10);
+  timeConverter(hh: string, mm: string, period: string) {
+    let PM = period === 'PM';
+    const min = parseInt(mm, 10);
     let hour = 12;
-    if (parseInt(time[0], 10) !== 12) {
-      hour = PM ? 12 + parseInt(time[0], 10) : time[0];
+    if (parseInt(hh, 10) !== 12) {
+      hour = PM ? 12 + parseInt(hh, 10) : parseInt(hh);
     }
     return { hour, min };
   }
 
+
   endUserSession() {
     let userEntry: UserEntryModel;
-    this.firebaseService.getUser(this.data.id).subscribe(x => {
+    this.firebaseService.getUser(this.currentUserEntry.id).subscribe(x => {
       userEntry = x;
       userEntry.endTimeHH = this.userEntryForm.get('endTime_hh').value;
       userEntry.endTimeMM = this.userEntryForm.get('endTime_mm').value;
       userEntry.endTimePeriod = this.userEntryForm.get('endTime_period').value;
-      this.calculateBill();
+      userEntry.endTimeFormatted = formatTime(userEntry.endTimeHH, userEntry.endTimeMM, userEntry.endTimePeriod);
+      if (!this.totalBillAmount && !this.totalTime) {
+        this.calculateBill();
+      }
       userEntry.totalPrice = this.totalBillAmount;
       userEntry.totalTime = this.totalTime;
-      this.firebaseService.updateUser(this.data.id, userEntry);
+      this.firebaseService.updateUser(this.currentUserEntry.id, userEntry);
     });
   }
 
   private calculateBill() {
-    const startTime24Hrs = this.timeConvertor(this.data.startTime);
+    const startTime24Hrs = this.timeConverter(this.currentUserEntry.data.startTimeHH, this.currentUserEntry.data.startTimeMM, this.currentUserEntry.data.startTimePeriod);
     const endTimeHH = this.userEntryForm.get('endTime_hh').value;
     const endTimeMM = this.userEntryForm.get('endTime_mm').value;
     const endTimePeriod = this.userEntryForm.get('endTime_period').value;
-
-    const endTime24Hrs = this.timeConvertor(`${endTimeHH}:${endTimeMM} ${endTimePeriod}`);
+    const endTime24Hrs = this.timeConverter(endTimeHH, endTimeMM, endTimePeriod);
 
     const start = new Date().setHours(startTime24Hrs.hour, startTime24Hrs.min);
     const end = new Date().setHours(endTime24Hrs.hour, endTime24Hrs.min);

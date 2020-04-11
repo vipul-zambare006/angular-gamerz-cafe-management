@@ -7,6 +7,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserRegistrationFormDialogComponent } from '../user-registration-form-dialog/user-registration-form-dialog.component';
 import { EndUserSessionDialogComponent } from '../end-user-session-dialog/end-user-session-dialog.component';
 
+export interface CurrentEntryData {
+  id: string;
+  data: UserEntryModel;
+}
+
 @Component({
   selector: 'app-current-user-entry-table',
   templateUrl: './current-user-entry-table.component.html',
@@ -27,7 +32,7 @@ export class CurrentUserEntryTableComponent implements OnInit {
 
   userEntryForm: FormGroup;
   displayedColumns: string[];
-  userDataSource: UserEntryModel[] = [];
+  currentUserEntries: CurrentEntryData[] = [];
   tableTitle: string;
 
   constructor(
@@ -69,46 +74,39 @@ export class CurrentUserEntryTableComponent implements OnInit {
 
   displayUsers() {
     this.firebaseService.getAllUserEntry().subscribe((userEntries) => {
-      const datasource = [];
+      const datasource: CurrentEntryData[] = [];
       userEntries.forEach(x => {
-        const user: UserEntryModel = x.payload.doc.data() as UserEntryModel;
+        const userEntry: UserEntryModel = x.payload.doc.data() as UserEntryModel;
         datasource.push({
           id: x.payload.doc.id,
-          name: user.name,
-          phone: user.phone,
-          email: user.email,
-          startTime: user.startTimeFormatted,
-          branchId: user.branchId,
-          endTime: user.endTimeHH ? user.endTimeFormatted : "-",
-          totalTime: user.totalTime,
-          totalPrice: user.totalPrice
+          data: userEntry
         });
       });
 
       if (this.isHistoryTable) {
-        this.userDataSource = datasource.filter((x) => x.endTime);
+        this.currentUserEntries = datasource.filter((x) => x.data.endTimeHH);
       } else {
-        this.userDataSource = datasource.filter((x) => x.endTime === '-');
+        this.currentUserEntries = datasource.filter((x) => !x.data.endTimeHH);
       }
     });
   }
 
-  openEditUserEntryDialoge(userEntry: UserEntryModel) {
+  openEditUserEntryDialoge(currentEntryData: CurrentEntryData) {
     const dialogRef = this.dialog.open(UserRegistrationFormDialogComponent, {
       width: '600px',
       height: '600px',
-      data: userEntry
+      data: currentEntryData
     });
 
     dialogRef.afterClosed().subscribe(result => {
     });
   }
 
-  openEndSessionDialog(userEntry: UserEntryModel) {
+  openEndSessionDialog(currentEntryData: CurrentEntryData) {
     const dialogRef = this.dialog.open(EndUserSessionDialogComponent, {
       width: '600px',
       height: '400px',
-      data: userEntry
+      data: currentEntryData.data
     });
 
     dialogRef.afterClosed().subscribe(result => {

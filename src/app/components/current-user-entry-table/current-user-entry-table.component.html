@@ -1,66 +1,95 @@
 <div class="row">
   <div class="col-md-12 p-4">
     <h4>{{tableTitle}}</h4>
-    <table id="user-entry-table" mat-table [dataSource]="userDataSource" class="mat-elevation-z8">
+    <table id="user-entry-table"
+           mat-table
+           [dataSource]="currentUserEntries"
+           class="mat-elevation-z8">
 
       <ng-container matColumnDef="branchId">
-        <th mat-header-cell *matHeaderCellDef> Branch </th>
-        <td mat-cell *matCellDef="let element"> {{element.branchId}} </td>
+        <th mat-header-cell
+            *matHeaderCellDef> Branch </th>
+        <td mat-cell
+            *matCellDef="let element"> {{element.data.branchId}} </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <th mat-header-cell
+            *matHeaderCellDef> Name </th>
+        <td mat-cell
+            *matCellDef="let element"> {{element.data.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="phone">
-        <th mat-header-cell *matHeaderCellDef> Phone </th>
-        <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+        <th mat-header-cell
+            *matHeaderCellDef> Phone </th>
+        <td mat-cell
+            *matCellDef="let element"> {{element.data.phone}} </td>
       </ng-container>
 
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        <th mat-header-cell
+            *matHeaderCellDef> Email </th>
+        <td mat-cell
+            *matCellDef="let element"> {{element.data.email}} </td>
       </ng-container>
 
       <ng-container matColumnDef="startTime">
-        <th mat-header-cell *matHeaderCellDef> Start Time </th>
-        <td mat-cell *matCellDef="let element"> {{element.startTime}} </td>
+        <th mat-header-cell
+            *matHeaderCellDef> Start Time </th>
+        <td mat-cell
+            *matCellDef="let element"> {{element.data.startTimeFormatted}} </td>
       </ng-container>
 
       <ng-container matColumnDef="endTime">
-        <th mat-header-cell *matHeaderCellDef> End Time </th>
-        <td mat-cell *matCellDef="let element"> {{element.endTime}} </td>
+        <th mat-header-cell
+            *matHeaderCellDef> End Time </th>
+        <td mat-cell
+            *matCellDef="let element"> {{element.data.endTimeFormatted}} </td>
       </ng-container>
 
       <ng-container *ngIf="!isHistoryTable else showTimePrice">
         <ng-container matColumnDef="edit">
-          <th mat-header-cell *matHeaderCellDef> Edit </th>
-          <td mat-cell *matCellDef="let element" (click)="openEditUserEntryDialoge(element)">
-            <button mat-raised-button color="primary">Edit</button>
+          <th mat-header-cell
+              *matHeaderCellDef> Edit </th>
+          <td mat-cell
+              *matCellDef="let element"
+              (click)="openEditUserEntryDialoge(element)">
+            <button mat-raised-button
+                    color="primary">Edit</button>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef> End session </th>
-          <td mat-cell *matCellDef="let element" (click)="openEndSessionDialog(element)">
-            <button mat-raised-button color="warn">End session</button>
+          <th mat-header-cell
+              *matHeaderCellDef> End session </th>
+          <td mat-cell
+              *matCellDef="let element"
+              (click)="openEndSessionDialog(element)">
+            <button mat-raised-button
+                    color="warn">End session</button>
           </td>
         </ng-container>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row
+          *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row
+          *matRowDef="let row; columns: displayedColumns;"></tr>
 
       <ng-template #showTimePrice>
         <ng-container matColumnDef="totalTime">
-          <th mat-header-cell *matHeaderCellDef> Total Time (in min.)</th>
-          <td mat-cell *matCellDef="let element"> {{element.totalTime}} min</td>
+          <th mat-header-cell
+              *matHeaderCellDef> Total Time (in min.)</th>
+          <td mat-cell
+              *matCellDef="let element"> {{element.data.totalTime}} min</td>
         </ng-container>
 
         <ng-container matColumnDef="totalPrice">
-          <th mat-header-cell *matHeaderCellDef>Total Price</th>
-          <td mat-cell *matCellDef="let element">&#8377; {{element.totalPrice}}</td>
+          <th mat-header-cell
+              *matHeaderCellDef>Total Price</th>
+          <td mat-cell
+              *matCellDef="let element">&#8377; {{element.data.totalPrice}}</td>
         </ng-container>
       </ng-template>
 

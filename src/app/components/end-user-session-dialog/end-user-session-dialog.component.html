@@ -1,32 +1,38 @@
 <div class="example-container pt-4">
-    <div mat-dialog-title class="pb-2">
+    <div mat-dialog-title
+         class="pb-2">
         <h5>End user session:</h5>
         <hr>
     </div>
 
+    <form mat-dialog-content
+          [formGroup]="userEntryForm">
 
-    <form mat-dialog-content [formGroup]="userEntryForm">
-
-        <h6>Name: {{data.name}}</h6>
-        <h6>Start time: {{data.startTime}}</h6>
+        <h6>Name: {{currentUserEntry.data.name}}</h6>
+        <h6>Start time: {{currentUserEntry.data.startTimeFormatted}}</h6>
         <div class="row pt-2">
             <div class="col-md-8">
                 <h6>End time:</h6>
                 <div class="row time-picker">
                     <div class="col-md-2">
                         <mat-form-field>
-                            <input matInput placeholder="hh" formControlName="endTime_hh">
+                            <input matInput
+                                   placeholder="hh"
+                                   formControlName="endTime_hh">
                         </mat-form-field>
                     </div>
                     <div class="col-md-2">
-                        <mat-form-field><input matInput placeholder="mm" formControlName="endTime_mm">
+                        <mat-form-field><input matInput
+                                   placeholder="mm"
+                                   formControlName="endTime_mm">
                         </mat-form-field>
                     </div>
                     <div class="col-md-1">
                         <mat-form-field>
                             <mat-label>AM/PM</mat-label>
                             <mat-select formControlName="endTime_period">
-                                <mat-option *ngFor="let format of timeFormat" [value]="format">
+                                <mat-option *ngFor="let format of timeFormat"
+                                            [value]="format">
                                     {{format}}
                                 </mat-option>
                             </mat-select>
@@ -37,7 +43,10 @@
         </div>
 
         <div class="col-md-2 pl-2">
-            <button mat-raised-button color="accent" (click)="displayBill()" cdkFocusInitial>Calculate
+            <button mat-raised-button
+                    color="accent"
+                    (click)="displayBill()"
+                    cdkFocusInitial>Calculate
                 bill</button>
         </div>
 
@@ -47,10 +56,16 @@
             </h5>
         </div>
 
-        <div class="pt-4 pb-2" mat-dialog-actions>
-            <button mat-button (click)="onNoClick()">Cancel</button>
-            <button mat-raised-button color="primary" [mat-dialog-close]="data" type="submit" (click)="endUserSession()"
-                cdkFocusInitial>End Session</button>
+        <div class="pt-4 pb-2"
+             mat-dialog-actions>
+            <button mat-button
+                    (click)="onNoClick()">Cancel</button>
+            <button mat-raised-button
+                    color="primary"
+                    [mat-dialog-close]="currentUserEntry.data"
+                    type="submit"
+                    (click)="endUserSession()"
+                    cdkFocusInitial>End Session</button>
         </div>
     </form>
 </div>

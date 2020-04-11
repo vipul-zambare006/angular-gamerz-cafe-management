@@ -1,27 +1,25 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { AppService } from 'src/app/app.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { FirebaseService } from 'src/app/services/firebase.service';
-import { UserEntryModel } from 'src/app/interfaces/userEntry';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UserEntryModel } from 'src/app/interfaces/userEntry';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { CurrentEntryData } from '../current-user-entry-table/current-user-entry-table.component';
 
 @Component({
   selector: 'app-user-registration-form-dialog',
   templateUrl: './user-registration-form-dialog.component.html',
   styleUrls: ['./user-registration-form-dialog.component.scss']
 })
-export class UserRegistrationFormDialogComponent implements OnInit {
+export class UserRegistrationFormDialogComponent {
   userEntryForm: FormGroup;
 
   timeFormat: string[] = ['AM', 'PM']
 
   constructor(
     public dialogRef: MatDialogRef<UserRegistrationFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: UserEntryModel,
+    @Inject(MAT_DIALOG_DATA) public currentUserEntry: CurrentEntryData,
     private formBuilder: FormBuilder,
-    private firebaseService: FirebaseService,
-    private appService: AppService) {
-
+    private firebaseService: FirebaseService) {
 
     this.userEntryForm = this.formBuilder.group({
       branchId: '',
@@ -33,15 +31,15 @@ export class UserRegistrationFormDialogComponent implements OnInit {
       startTime_period: '',
     });
 
-    if (data) {
+    if (currentUserEntry && currentUserEntry.data) {
       this.userEntryForm.setValue({
-        branchId: data.branchId,
-        name: data.name,
-        phone: data.phone,
-        email: data.email,
-        startTime_hh: data.startTimeHH ? data.startTimeHH : '',
-        startTime_mm: data.startTimeMM ? data.startTimeMM : '',
-        startTime_period: data.startTimePeriod ? data.startTimePeriod : '',
+        branchId: currentUserEntry.data.branchId,
+        name: currentUserEntry.data.name,
+        phone: currentUserEntry.data.phone,
+        email: currentUserEntry.data.email,
+        startTime_hh: currentUserEntry.data.startTimeHH ? currentUserEntry.data.startTimeHH : '',
+        startTime_mm: currentUserEntry.data.startTimeMM ? currentUserEntry.data.startTimeMM : '',
+        startTime_period: currentUserEntry.data.startTimePeriod ? currentUserEntry.data.startTimePeriod : '',
       });
     }
   }
@@ -50,14 +48,8 @@ export class UserRegistrationFormDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit() {
-  }
-
-  formatTime(hr: string, min: string, period: string): string {
-    return `${hr}:${min} ${period}`;
-  }
-
   doUserEntry() {
+    debugger
     const userEntry = new UserEntryModel(
       this.userEntryForm.get('branchId').value,
       this.userEntryForm.get('name').value,
@@ -68,8 +60,15 @@ export class UserRegistrationFormDialogComponent implements OnInit {
       this.userEntryForm.get('startTime_period').value
     )
 
-    if (this.data) {
-      this.firebaseService.updateUser(this.data.id, userEntry);
+    for (let [key, value] of Object.entries(userEntry)) {
+      if (!value) {
+        userEntry[key] = '';
+      }
+    }
+
+    if (this.currentUserEntry) {
+      userEntry.id = this.currentUserEntry.id;
+      this.firebaseService.updateUser(this.currentUserEntry.id, userEntry);
     } else {
       this.firebaseService.createUser(userEntry);
     }

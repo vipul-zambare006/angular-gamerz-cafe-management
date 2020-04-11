@@ -15,7 +15,7 @@ export class FirebaseService {
     }
 
     updateUser(userKey: string, value: UserEntryModel) {
-        return this.db.collection('UserEntry').doc(userKey).set(value);
+        return this.db.collection('UserEntry').doc(userKey).set(Object.assign({}, value));
     }
 
     deleteUser(userKey: string) {

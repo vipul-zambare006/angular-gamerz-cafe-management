@@ -1,20 +1,29 @@
-<mat-toolbar color="primary">
-    <span>Anytime Cyber</span>
+<mat-toolbar class="menu-color"
+             color="primary">
+    <span>24/7 GAMERZ CAFE</span>
     <span class="example-fill-remaining-space"></span>
 </mat-toolbar>
 
 <mat-toolbar color="basic">
-    <button mat-raised-button color="primary" routerLink="/">Home</button>
+    <button mat-raised-button
+            color="primary"
+            class="menu-button"
+            routerLink="/">Home</button>
     <div class="pl-4">
-        <button mat-raised-button color="primary" routerLink="/" (click)="openUserRegitrationForm()">Enter user</button>
+        <button mat-raised-button
+                color="primary"
+                class="menu-button"
+                routerLink="/"
+                (click)="openUserRegitrationForm()">Enter user</button>
     </div>
     <div class="pl-4">
-        <a mat-raised-button color="primary" routerLink="/user-entry-history">
+        <a mat-raised-button
+           color="primary"
+           class="menu-button"
+           routerLink="/user-entry-history">
             Show history by date
         </a>
     </div>
     <span class="example-fill-remaining-space"></span>
 </mat-toolbar>
-<!-- 
-<app-current-user-entry-table></app-current-user-entry-table> -->
 <router-outlet></router-outlet>

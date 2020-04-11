@@ -17,13 +17,11 @@ export class AppComponent {
   openUserRegitrationForm() {
     const dialogRef = this.dialog.open(UserRegistrationFormDialogComponent, {
       width: '600px',
-      height: '600px'
-      // data: {name: this.name, animal: this.animal}
+      height: '600px',
+      data: undefined
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
     });
   }
 }
