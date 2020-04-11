@@ -1,7 +1,7 @@
 import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserEntry } from '../interfaces/userEntry';
+import { UserEntryModel } from '../interfaces/userEntry';
 
 @Injectable({
     providedIn: 'root'
@@ -10,11 +10,11 @@ export class FirebaseService {
 
     constructor(public db: AngularFirestore) { }
 
-    getUser(userKey: string): Observable<UserEntry> {
-        return this.db.collection('UserEntry').doc(userKey).valueChanges() as Observable<UserEntry>;
+    getUser(userKey: string): Observable<UserEntryModel> {
+        return this.db.collection('UserEntry').doc(userKey).valueChanges() as Observable<UserEntryModel>;
     }
 
-    updateUser(userKey: string, value: UserEntry) {
+    updateUser(userKey: string, value: UserEntryModel) {
         return this.db.collection('UserEntry').doc(userKey).set(value);
     }
 
@@ -45,7 +45,8 @@ export class FirebaseService {
     //     return this.db.collection('UserEntry', ref => ref.orderBy('age').startAt(value)).snapshotChanges();
     // }
 
-    createUser(userEntry: UserEntry) {
-        return this.db.collection('UserEntry').add(userEntry);
+    createUser(userEntry: UserEntryModel) {
+        console.log(userEntry);
+        return this.db.collection('UserEntry').add(JSON.parse(JSON.stringify(userEntry)));
     }
 }
